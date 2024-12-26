@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荣誉奖项 - 个人知识库</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">个人知识库</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="index01.html" class="nav-link">项目</a>
+                <a href="index02.html" class="nav-link">资源</a>
+                <a href="index03.html" class="nav-link">笔记</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="awards-page">
+        <h1 class="page-title">荣誉奖项</h1>
+        
+        <div class="timeline-container">
+            <div class="timeline" id="awardsTimeline">
+            </div>
+        </div>
+    </main>
+
+    <!-- 版权声明 -->
+    <footer class="copyright-section">
+        <div class="copyright-divider"></div>
+        <p class="copyright-text">© 2024 个人知识库. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const awards = [
+            {
+                title: "西北大学2024年度大学生创新创业训练计划",
+                description: "国家级优秀结项",
+                date: "2024-03",
+                icon: "trophy"
+            },
+            {
+                title: "全国大学生广告艺术大赛",
+                description: "省级一等奖",
+                date: "2023-12",
+                icon: "code"
+            },
+            {
+                title: "第十一届全国大学生新媒体创意大赛陕西赛区",
+                description: "一等奖",
+                date: "2023-09",
+                icon: "star"
+            }
+        ];
+
+        function generateRandomAward() {
+            const titles = ["全国大学生广告艺术大赛", "中国好创意暨全国数字艺术设计大赛陕西赛区", "全国大学生新媒体创意大赛陕西赛区", "西北大学大学生创新创业训练计划", "西北大学易班网络文化节"];
+            const descriptions = [
+                "在项目开发中展现卓越创新能力",
+                "为团队做出重要贡献",
+                "在用户界面设计方面表现突出",
+                "完成关键项目任务",
+                "成功带领团队完成重要项目"
+            ];
+            const icons = ["trophy", "star", "award", "medal", "certificate"];
+
+            return {
+                title: titles[Math.floor(Math.random() * titles.length)],
+                description: descriptions[Math.floor(Math.random() * descriptions.length)],
+                date: generateRandomDate(),
+                icon: icons[Math.floor(Math.random() * icons.length)]
+            };
+        }
+
+        function generateRandomDate() {
+            const start = new Date(2022, 0, 1);
+            const end = new Date();
+            const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+            return randomDate.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' });
+        }
+
+        // 渲染时间轴
+        function renderTimeline() {
+            const timeline = document.getElementById('awardsTimeline');
+            const numberOfAwards = 10; // 生成10个奖项
+            const generatedAwards = [];
+
+            for (let i = 0; i < numberOfAwards; i++) {
+                generatedAwards.push(generateRandomAward());
+            }
+
+            // 按日期排序
+            generatedAwards.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 渲染到页面
+            generatedAwards.forEach(award => {
+                const awardElement = document.createElement('div');
+                awardElement.className = 'timeline-item';
+                awardElement.innerHTML = `
+                    <div class="timeline-icon">
+                        <i class="fas fa-${award.icon}"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">${award.date}</span>
+                        <h3>${award.title}</h3>
+                        <p>${award.description}</p>
+                    </div>
+                `;
+                timeline.appendChild(awardElement);
+            });
+        }
+
+        // 页面加载时渲染时间轴
+        window.addEventListener('load', renderTimeline);
+    </script>
+</body>
+</html>

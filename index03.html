@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔记 - 个人知识库</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 引入富文本编辑器 -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">个人知识库</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="index01.html" class="nav-link">项目</a>
+                <a href="index02.html" class="nav-link">资源</a>
+                <a href="index03.html" class="nav-link active">笔记</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="notes-container">
+        <!-- 左侧功能栏 -->
+        <aside class="notes-sidebar">
+            <button class="new-note-btn" id="newNoteBtn">
+                <i class="fas fa-plus"></i> 新建笔记
+            </button>
+            <nav class="category-nav">
+                <a href="#" class="category-item active">
+                    <i class="fas fa-book"></i>
+                    全部笔记
+                </a>
+                <a href="#" class="category-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    按日期
+                </a>
+                <a href="#" class="category-item">
+                    <i class="fas fa-tags"></i>
+                    按标签
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="notes-content">
+            <div class="notes-grid">
+                <!-- 笔记卡片示例 -->
+                <article class="note-card">
+                    <div class="note-date">2024-12-25</div>
+                    <h3 class="note-title">新媒体运营策略</h3>
+                    <div class="note-text">
+                        
+                        <p class="intro">
+                            新媒体运营早已不再是简单的"发发文章、刷刷流量"，而是需要一套完整的策略和方法论，以实现从流量获取到价值转化的闭环。以下将从核心策略和方法论两个层面，深入探讨如何做好新媒体运营：
+                        </p>
+
+                        <section class="strategy">
+                            <h3>一、核心策略：以用户为中心，构建价值闭环</h3>
+                            <div class="strategy-item">
+                                <h4>1. 精准定位，锁定目标用户：</h4>
+                                <ul>
+                                    <li>明确目标用户画像：年龄、性别、地域、职业、兴趣爱好、消费习惯等</li>
+                                    <li>分析用户需求痛点：目标用户面临哪些问题？他们的需求和痛点是什么？</li>
+                                    <li>打造差异化定位：与竞争对手相比，你的独特优势是什么？如何吸引用户关注？</li>
+                                </ul>
+                                <h4>2. 内容为王，打造优质IP：</h4>
+                                <ul>
+                                    <li>内容形式多样化：图文、视频、直播、音频等多种形式，满足用户不同需求。</li>
+                                    <li>内容质量精益求精：原创、深度、有价值，能够解决用户实际问题，引发用户共鸣。</li>
+                                    <li>打造品牌IP：通过持续输出优质内容，塑造品牌形象，提升用户粘性。</li>
+                                </ul>
+                            </div>
+                            <!-- Similar structure for other sections -->
+                        </section>
+
+                        <section class="strategy">
+                            <h3>二、方法论：从0到1搭建运营体系</h3>
+                            <div class="strategy-item">
+                                <h4>1. 内容创作方法论：</h4>
+                                <ul>
+                                    <li>选题策划：关注热点话题、用户需求、行业趋势，挖掘有价值的内容选题。</li>
+                                    <li>内容创作：运用讲故事、场景化、数据化等技巧，提升内容吸引力和传播力。</li>
+                                    <li>内容排版：注重排版美观、逻辑清晰、重点突出，提升用户阅读体验。</li>
+                                </ul>
+                                <h4>2. 用户运营方法论：</h4>
+                                <ul>
+                                    <li>用户分层运营：根据用户活跃度、消费能力等维度，将用户分层，制定差异化运营策略。</li>
+                                    <li>用户互动激励：通过评论、点赞、转发、抽奖等方式，提升用户参与度和活跃度。</li>
+                                </ul>
+                            </div>
+                            <!-- Similar structure for other sections -->
+                        </section>
+                    </div>
+                    <div class="note-images">
+                        <img src="images\6.jpg" alt="笔记图片">
+                    </div>
+                    <div class="note-actions">
+                        <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+
+    <!-- 新建笔记弹窗 -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>新建笔记</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="note-title-input" placeholder="输入标题...">
+                <div id="editor"></div>
+                <div class="image-upload">
+                    <label for="imageInput">
+                        <i class="fas fa-image"></i> 添加图片
+                    </label>
+                    <input type="file" id="imageInput" multiple accept="image/*">
+                </div>
+                <div class="image-preview"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn">取消</button>
+                <button class="save-btn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入富文本编辑器脚本 -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="notes.js"></script>
+</body>
+
+    <!-- 版权声明 -->
+    <footer class="copyright-section">
+        <div class="copyright-divider"></div>
+        <p class="copyright-text">© 2024 个人知识库. All rights reserved.</p>
+    </footer>
+
+</html>

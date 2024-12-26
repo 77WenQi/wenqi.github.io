@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目 - 个人知识库</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">个人知识库</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="index01.html" class="nav-link active">项目</a>
+                <a href="index02.html" class="nav-link">资源</a>
+                <a href="index03.html" class="nav-link">笔记</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="projects-page">
+        <h1 class="page-title">项目展示</h1>
+        
+        <div class="projects-grid" id="projectsContainer">
+            <!-- 项目将通过 JavaScript 动态生成 -->
+        </div>
+    </main>
+
+    <!-- 版权声明 -->
+    <footer class="copyright-section">
+        <div class="copyright-divider"></div>
+        <p class="copyright-text">© 2024 个人知识库. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 项目数据生成
+        function generateRandomProject() {
+            const titles = [
+                "新媒体数据分析平台",
+                "短视频内容管理系统",
+                "社交媒体监测工具",
+                "媒体融合数据中心",
+                "新闻推荐引擎"
+            ];
+            
+            const descriptions = [
+                "基于大数据的新媒体数据分析平台，提供实时数据监测和分析功能",
+                "集成多平台的短视频内容管理和发布系统",
+                "全方位社交媒体监测和舆情分析工具",
+                "打通传统媒体和新媒体的数据融合平台",
+                "基于AI的个性化新闻推荐系统"
+            ];
+
+            const technologies = [
+                ["Python", "React", "TensorFlow"],
+                ["Vue.js", "Node.js", "MongoDB"],
+                ["Django", "PostgreSQL", "Redis"],
+                ["Spring Boot", "MySQL", "Elasticsearch"],
+                ["Flask", "PyTorch", "AWS"]
+            ];
+
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            
+            return {
+                title: titles[randomIndex],
+                description: descriptions[randomIndex],
+                technologies: technologies[randomIndex],
+                stats: {
+                    users: Math.floor(Math.random() * 10000),
+                    engagement: Math.floor(Math.random() * 100),
+                    growth: Math.floor(Math.random() * 200 - 100),
+                    satisfaction: Math.floor(Math.random() * 100)
+                }
+            };
+        }
+
+        // 创建图表
+        function createCharts(containerId, stats) {
+            const container = document.getElementById(containerId);
+            
+            // 条形图
+            const barCanvas = document.createElement('canvas');
+            new Chart(barCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['用户数', '参与度', '增长率', '满意度'],
+                    datasets: [{
+                        data: [stats.users/100, stats.engagement, stats.growth, stats.satisfaction],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // 饼图
+            const pieCanvas = document.createElement('canvas');
+            new Chart(pieCanvas, {
+                type: 'pie',
+                data: {
+                    labels: ['活跃用户', '非活跃用户'],
+                    datasets: [{
+                        data: [stats.engagement, 100 - stats.engagement],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ]
+                    }]
+                }
+            });
+
+            container.appendChild(barCanvas);
+            container.appendChild(pieCanvas);
+        }
+
+        // 渲染项目
+        function renderProjects() {
+            const container = document.getElementById('projectsContainer');
+            const numberOfProjects = 6;
+
+            for (let i = 0; i < numberOfProjects; i++) {
+                const project = generateRandomProject();
+                const projectElement = document.createElement('div');
+                projectElement.className = 'project-card';
+                
+                projectElement.innerHTML = `
+                    <h2>${project.title}</h2>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <div class="project-stats" id="projectStats${i}"></div>
+                `;
+                
+                container.appendChild(projectElement);
+                createCharts(`projectStats${i}`, project.stats);
+            }
+        }
+
+        // 页面加载时渲染项目
+        window.addEventListener('load', renderProjects);
+    </script>
+</body>
+</html>
